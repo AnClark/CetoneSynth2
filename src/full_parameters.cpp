@@ -1,13 +1,8 @@
-#include "CetoneSynth2.h"
-#include "parameters.h"
+#include "full_parameters.hpp"
 
-struct CS2_PARAM
-{
-	const char* name;
-	float min;
-	float max;
-	float def;	// See CS2::CreateEmptyPrg()
-};
+#include "VST2.4_Compatibility.hpp"
+#include "defines.h"
+#include "filter.h"
 
 static constexpr CS2_PARAM PARAM_LIST[pNumParameters] = {
 	{"Osc1 Semitone", -64, 64 + 12, 64},
@@ -135,7 +130,7 @@ static constexpr CS2_PARAM PARAM_LIST[pNumParameters] = {
 	{"Audio Pan", -64, 64, 0},
 };
 
-void CS2::getParameterName_FullVer(VstInt32 index, char* text)
+void CS2_FullParam::getParameterName_FullVer(pParameters index, char* text)
 {
 	if (index >= 0 && index < pNumParameters)
 		vst_strncpy(text, PARAM_LIST[index].name, kVstMaxParamStrLen);
@@ -143,44 +138,28 @@ void CS2::getParameterName_FullVer(VstInt32 index, char* text)
 		vst_strncpy(text, "Unknown", kVstMaxParamStrLen);
 }
 
-float CS2::getParameter_FullVer(VstInt32 index) const
+float CS2_FullParam::getParameterMinValue(pParameters index)
 {
-	DISTRHO_SAFE_ASSERT_RETURN(index >= 0 && index < pNumParameters, 0.0f)
-
-	if (index == pVoices)
-		return (float)this->_Synth->sPrg.voices;
-
-	return this->_Synth->GetParameter(index);
-}
-
-void CS2::setParameter_FullVer(VstInt32 index, float value)
-{
-	DISTRHO_SAFE_ASSERT_RETURN(index >= 0 && index < pNumParameters, )
-
-	// The following 2 parameters should only be changed via MIDI CC
-	if (index == pAftertouch || index == pModwheel)
-		return;
-
-	this->_Synth->SetParameter(index, value);
-}
-
-float CS2::getParameterMinValue(VstInt32 index)
-{
-	DISTRHO_SAFE_ASSERT_RETURN(index >= 0 && index < pNumParameters, 0.0f)
+	if(index < 0 && index >= pNumParameters) {
+		return 0.0f;
+	}
 
 	return PARAM_LIST[index].min;
 }
 
-float CS2::getParameterMaxValue(VstInt32 index)
+float CS2_FullParam::getParameterMaxValue(pParameters index)
 {
-	DISTRHO_SAFE_ASSERT_RETURN(index >= 0 && index < pNumParameters, 0.0f)
+	if(index < 0 && index >= pNumParameters) {
+		return 0.0f;
+	}
 
 	return PARAM_LIST[index].max;
 }
 
-float CS2::getParameterDefValue(VstInt32 index)
+float CS2_FullParam::getParameterDefValue(pParameters index)
 {
-	DISTRHO_SAFE_ASSERT_RETURN(index >= 0 && index < pNumParameters, 0.0f)
-
+	if(index < 0 && index >= pNumParameters) {
+		return 0.0f;
+	}
 	return PARAM_LIST[index].def;
 }

@@ -56,10 +56,6 @@ public:
 	void		getParameterLabel(VstInt32 index, char* label);
 	void		getParameterDisplay(VstInt32 index, char* text);
 	void		getParameterName(VstInt32 index, char* text);
-	void		getParameterName_FullVer(VstInt32 index, char* text);
-	float		getParameterMinValue(VstInt32 index);
-	float		getParameterMaxValue(VstInt32 index);
-	float		getParameterDefValue(VstInt32 index);
 	void		getProgramName(char* name);
 	bool		getProgramNameIndexed(VstInt32 category, VstInt32 index, char* name);
 	void		setProgramName(char* name);

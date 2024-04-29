@@ -1,19 +1,22 @@
 #include "CetoneSynth2.h"
-#include "parameters.h"
+#include "full_parameters.hpp"
+
+// -----------------------------------------------------------
+// DISTRHO APIs
 
 void CS2::initParameter(uint32_t index, Parameter& parameter)
 {
     parameter.hints = kParameterIsAutomatable;
 
     // Fallback to classic VST 2.4 param range (0.0 ~ 1.0), to fit with Cetone's own param handlers.
-    parameter.ranges.min = getParameterMinValue(index);
-    parameter.ranges.max = getParameterMaxValue(index);
-    parameter.ranges.def = getParameterDefValue(index);
+    parameter.ranges.min = CS2_FullParam::getParameterMinValue(pParameters(index));
+    parameter.ranges.max = CS2_FullParam::getParameterMaxValue(pParameters(index));
+    parameter.ranges.def = CS2_FullParam::getParameterDefValue(pParameters(index));
 
     // Must set parameter.symbol, this is the unique ID of each parameter.
     // If not set, you can neither save presets nor reset to factory default, in VST3 and CLAP!
     char buff[256];
-    getParameterName_FullVer(index, buff);
+    CS2_FullParam::getParameterName_FullVer(pParameters(index), buff);
     parameter.symbol = String(buff).replace(' ', '_').replace('.', '_');
     parameter.name = String(buff);
 
@@ -79,4 +82,29 @@ void CS2::sampleRateChanged(double newSampleRate)
 void CS2::bufferSizeChanged(int newBufferSize)
 {
     this->setBlockSize(newBufferSize);
+}
+
+
+// -----------------------------------------------------------
+// Extensions of Neotec's plugin API
+
+float CS2::getParameter_FullVer(VstInt32 index) const
+{
+	DISTRHO_SAFE_ASSERT_RETURN(index >= 0 && index < pNumParameters, 0.0f)
+
+	if (index == pVoices)
+		return (float)this->_Synth->sPrg.voices;
+
+	return this->_Synth->GetParameter(index);
+}
+
+void CS2::setParameter_FullVer(VstInt32 index, float value)
+{
+	DISTRHO_SAFE_ASSERT_RETURN(index >= 0 && index < pNumParameters, )
+
+	// The following 2 parameters should only be changed via MIDI CC
+	if (index == pAftertouch || index == pModwheel)
+		return;
+
+	this->_Synth->SetParameter(index, value);
 }

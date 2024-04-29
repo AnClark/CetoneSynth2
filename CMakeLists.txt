@@ -24,7 +24,6 @@ set (SRC_BACKEND
     src/statics.cpp
     src/svoice.cpp
     src/Synth.cpp
-    src/full_parameters.cpp
 )
 
 dpf_add_plugin (${PROJECT_NAME}
@@ -33,5 +32,7 @@ dpf_add_plugin (${PROJECT_NAME}
         src/CetoneSynth2.cpp
         src/CetoneSynth2_DPF.cpp
         ${SRC_BACKEND}
+    FILES_COMMON
+        src/full_parameters.cpp
 )
 
