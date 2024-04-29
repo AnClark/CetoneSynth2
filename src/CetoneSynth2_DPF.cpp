@@ -1,30 +1,63 @@
 #include "CetoneSynth2.h"
+#include "parameters.h"
 
 void CS2::initParameter(uint32_t index, Parameter& parameter)
 {
     parameter.hints = kParameterIsAutomatable;
 
     // Fallback to classic VST 2.4 param range (0.0 ~ 1.0), to fit with Cetone's own param handlers.
-    parameter.ranges.min = 0.0f;
-    parameter.ranges.max = 1.0f;
-    parameter.ranges.def = getParameter(index);
+    parameter.ranges.min = getParameterMinValue(index);
+    parameter.ranges.max = getParameterMaxValue(index);
+    parameter.ranges.def = getParameterDefValue(index);
 
     // Must set parameter.symbol, this is the unique ID of each parameter.
     // If not set, you can neither save presets nor reset to factory default, in VST3 and CLAP!
     char buff[256];
-    getParameterName(index, buff);
+    getParameterName_FullVer(index, buff);
     parameter.symbol = String(buff).replace(' ', '_').replace('.', '_');
     parameter.name = String(buff);
+
+    switch (index) {
+        // The following parameters are switches
+        case pFExp:
+        case pL1Sync:
+        case pL1Retrig:
+        case pL1SNH:
+        case pL2Sync:
+        case pL2Retrig:
+        case pL2SNH:
+        case pArpSync:
+        case pArpLoop:
+            parameter.hints |= kParameterIsBoolean;
+            break;
+
+        // The following parameters are integer
+        case pOSemi1:
+        case pOSemi2:
+        case pOSemi3:
+        case pOFine1:
+        case pOFine2:
+        case pOFine3:
+        case pOMode1:
+        case pOMode2:
+        case pOMode3:
+        case pFMode:
+        case pOFlags1:
+        case pOFlags2:
+        case pOFlags3:
+            parameter.hints |= kParameterIsInteger;
+            break;
+    }
 }
 
 float CS2::getParameterValue(uint32_t index) const
 {
-    return this->getParameter(index);
+    return this->getParameter_FullVer(index);
 }
 
 void CS2::setParameterValue(uint32_t index, float value)
 {
-    this->setParameter(index, value);
+    this->setParameter_FullVer(index, value);
 }
 
 void CS2::activate()

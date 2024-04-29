@@ -1,20 +1,6 @@
 #pragma once
 
 // ---------------------------------------------------------------------------
-// The following 2 definitions are moved from the beginning of CetoneSynth2.cpp
-
-typedef struct
-{
-	const char* name;
-	int ctrl;
-	int pval;
-	int voffs;
-	int div;
-} VST_PARAM;
-
-constexpr auto PARAM_COUNT = 46;
-
-// ---------------------------------------------------------------------------
 
 enum kParameters
 {

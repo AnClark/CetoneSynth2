@@ -24,6 +24,7 @@ set (SRC_BACKEND
     src/statics.cpp
     src/svoice.cpp
     src/Synth.cpp
+    src/full_parameters.cpp
 )
 
 dpf_add_plugin (${PROJECT_NAME}

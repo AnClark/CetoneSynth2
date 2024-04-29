@@ -50,10 +50,16 @@ public:
 	void		HandleMidi(int p0, int p1, int p2);
 
 	void		setParameter(VstInt32 index, float value);
+	void		setParameter_FullVer(VstInt32 index, float value);
 	float		getParameter(VstInt32 index) const;
+	float		getParameter_FullVer(VstInt32 index) const;
 	void		getParameterLabel(VstInt32 index, char* label);
 	void		getParameterDisplay(VstInt32 index, char* text);
 	void		getParameterName(VstInt32 index, char* text);
+	void		getParameterName_FullVer(VstInt32 index, char* text);
+	float		getParameterMinValue(VstInt32 index);
+	float		getParameterMaxValue(VstInt32 index);
+	float		getParameterDefValue(VstInt32 index);
 	void		getProgramName(char* name);
 	bool		getProgramNameIndexed(VstInt32 category, VstInt32 index, char* name);
 	void		setProgramName(char* name);

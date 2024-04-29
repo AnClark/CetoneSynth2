@@ -4,6 +4,17 @@
 #include "CetoneSynth2.h"
 #include "parameters.h"
 
+typedef struct
+{
+	const char* name;
+	int ctrl;
+	int pval;
+	int voffs;
+	int div;
+} VST_PARAM;
+
+constexpr auto PARAM_COUNT = 46;
+
 static VST_PARAM _params[] = 
 {	//01234567
 	{"Volume", 7, pMixVol, 0, 1},
@@ -79,7 +90,7 @@ END_NAMESPACE_DISTRHO
 //CS2::CS2(audioMasterCallback audioMaster)
 //: AudioEffectX(audioMaster, 128, PARAM_COUNT)
 CS2::CS2()
-: DISTRHO::Plugin(PARAM_COUNT, 0, 0)
+: DISTRHO::Plugin(pNumParameters, 0, 0)
 {
 	int i;
 	
