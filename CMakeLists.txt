@@ -12,6 +12,7 @@ add_subdirectory (dpf)
 
 include_directories (   
     src/
+    images/
 )
 
 set (SRC_BACKEND
@@ -32,6 +33,11 @@ dpf_add_plugin (${PROJECT_NAME}
         src/CetoneSynth2.cpp
         src/CetoneSynth2_DPF.cpp
         ${SRC_BACKEND}
+    FILES_UI
+        src/Gui_DPF.cpp
+        src/GuiHelper.cpp
+        fonts/CetoneFonts.cpp
+        images/CS2_Art.cpp
     FILES_COMMON
         src/full_parameters.cpp
 )
