@@ -5,6 +5,7 @@
 #include "parameters.h"
 
 namespace Art = CS2_Art;
+namespace Buttons = CS2_Art;
 namespace Fonts = CetoneFonts;
 
 CCetoneUI::CCetoneUI()
@@ -13,6 +14,24 @@ CCetoneUI::CCetoneUI()
 	, fImgKnob(Art::knob_normalData, Art::knob_normalWidth, Art::knob_normalHeight, kImageFormatBGRA)
 	, fImgKnobRed(Art::knob_redData, Art::knob_redWidth, Art::knob_redHeight, kImageFormatBGR)
 	, fImgKnobScale(Art::knob_scaleData, Art::knob_scaleWidth, Art::knob_scaleHeight, kImageFormatBGRA)
+	, fImgBtnOff_0(Buttons::btn_off_0Data, 40, 16)
+	, fImgBtnOff_1(Buttons::btn_off_1Data, 40, 16)
+	, fImgBtnSaw_0(Buttons::btn_saw_offData, 40, 16)
+	, fImgBtnSaw_1(Buttons::btn_saw_onData, 40, 16)
+	, fImgBtnPulse_0(Buttons::btn_pulse_offData, 40, 16)
+	, fImgBtnPulse_1(Buttons::btn_pulse_onData, 40, 16)
+	, fImgBtnTri_0(Buttons::btn_tri_offData, 40, 16)
+	, fImgBtnTri_1(Buttons::btn_tri_onData, 40, 16)
+	, fImgBtnNoise_0(Buttons::btn_noise_offData, 40, 16)
+	, fImgBtnNoise_1(Buttons::btn_noise_onData, 40, 16)
+	, fImgNorm_0(Buttons::btn_norm_offData, 40, 16)
+	, fImgNorm_1(Buttons::btn_norm_onData, 40, 16)
+	, fImgAdd_0(Buttons::btn_add_offData, 40, 16)
+	, fImgAdd_1(Buttons::btn_add_onData, 40, 16)
+	, fImgMul_0(Buttons::btn_mul_offData, 40, 16)
+	, fImgMul_1(Buttons::btn_mul_onData, 40, 16)
+	, fImgSuper_0(Buttons::btn_super_offData, 40, 16)
+	, fImgSuper_1(Buttons::btn_super_onData, 40, 16)
 {
 	/* Initialize NanoVG font and text buffer */
 	NanoVG::FontId font = fNanoText.createFontFromMemory("Source Sans Regular", Fonts::SourceSans3_RegularData, Fonts::SourceSans3_RegularDataSize, false);
@@ -112,14 +131,91 @@ CCetoneUI::CCetoneUI()
 
 	_createKnob(fAudioVol, pAudioVol, 453, 502);
 	_createKnob(fAudioPan, pAudioPan, 493, 502);
+
+	_createSwitchButton(fOscWaveOff[0], kOOff1, fImgBtnOff_1, fImgBtnOff_0, 164, 36);
+	_createSwitchButton(fOscWaveSaw[0], kOSaw1, fImgBtnSaw_1, fImgBtnSaw_0, 164, 54);
+	_createSwitchButton(fOscWavePulse[0], kOPulse1, fImgBtnPulse_1, fImgBtnPulse_0, 164, 70);
+	_createSwitchButton(fOscWaveTri[0], kOTri1, fImgBtnTri_1, fImgBtnTri_0, 164, 86);
+	_createSwitchButton(fOscWaveNoise[0], kONoise1, fImgBtnNoise_1, fImgBtnNoise_0, 164, 102);
+
+	_createSwitchButton(fOscWaveOff[1], kOOff2, fImgBtnOff_1, fImgBtnOff_0, 373, 36);
+	_createSwitchButton(fOscWaveSaw[1], kOSaw2, fImgBtnSaw_1, fImgBtnSaw_0, 373, 54);
+	_createSwitchButton(fOscWavePulse[1], kOPulse2, fImgBtnPulse_1, fImgBtnPulse_0, 373, 70);
+	_createSwitchButton(fOscWaveTri[1], kOTri2, fImgBtnTri_1, fImgBtnTri_0, 373, 86);
+	_createSwitchButton(fOscWaveNoise[1], kONoise2, fImgBtnNoise_1, fImgBtnNoise_0, 373, 102);
+
+	_createSwitchButton(fOscWaveOff[2], kOOff3, fImgBtnOff_1, fImgBtnOff_0, 582, 36);
+	_createSwitchButton(fOscWaveSaw[2], kOSaw3, fImgBtnSaw_1, fImgBtnSaw_0, 582, 54);
+	_createSwitchButton(fOscWavePulse[2], kOPulse3, fImgBtnPulse_1, fImgBtnPulse_0, 582, 70);
+	_createSwitchButton(fOscWaveTri[2], kOTri3, fImgBtnTri_1, fImgBtnTri_0, 582, 86);
+	_createSwitchButton(fOscWaveNoise[2], kONoise3, fImgBtnNoise_1, fImgBtnNoise_0, 582, 102);
+
+	_createSwitchButton(fOscModeNorm[0], kONormal1, fImgNorm_1, fImgNorm_0, 4, 102);
+	_createSwitchButton(fOscModeAdd[0], kOAdd1, fImgAdd_1, fImgAdd_0, 44, 102);
+	_createSwitchButton(fOscModeMul[0], kOMul1, fImgMul_1, fImgMul_0, 84, 102);
+	_createSwitchButton(fOscModeSuper[0], kOSuper1, fImgSuper_1, fImgSuper_0, 124, 102);
+
+	_createSwitchButton(fOscModeNorm[1], kONormal2, fImgNorm_1, fImgNorm_0, 213, 102);
+	_createSwitchButton(fOscModeAdd[1], kOAdd2, fImgAdd_1, fImgAdd_0, 253, 102);
+	_createSwitchButton(fOscModeMul[1], kOMul2, fImgMul_1, fImgMul_0, 293, 102);
+	_createSwitchButton(fOscModeSuper[1], kOSuper2, fImgSuper_1, fImgSuper_0, 333, 102);
+
+	_createSwitchButton(fOscModeNorm[2], kONormal3, fImgNorm_1, fImgNorm_0, 422, 102);
+	_createSwitchButton(fOscModeAdd[2], kOAdd3, fImgAdd_1, fImgAdd_0, 462, 102);
+	_createSwitchButton(fOscModeMul[2], kOMul3, fImgMul_1, fImgMul_0, 502, 102);
+	_createSwitchButton(fOscModeSuper[2], kOSuper3, fImgSuper_1, fImgSuper_0, 542, 102);
+
+	_createSwitchButton(fLfoWaveOff[0], kL1Off, fImgBtnOff_1, fImgBtnOff_0, 164, 313);
+	_createSwitchButton(fLfoWaveSaw[0], kL1Saw, fImgBtnSaw_1, fImgBtnSaw_0, 204, 313);
+	_createSwitchButton(fLfoWavePulse[0], kL1Pulse, fImgBtnPulse_1, fImgBtnPulse_0, 204, 329);
+	_createSwitchButton(fLfoWaveTri[0], kL1Tri, fImgBtnTri_1, fImgBtnTri_0, 204, 345);
+	_createSwitchButton(fLfoWaveNoise[0], kL1Noise, fImgBtnNoise_1, fImgBtnNoise_0, 204, 361);
+
+	_createSwitchButton(fLfoWaveOff[1], kL2Off, fImgBtnOff_1, fImgBtnOff_0, 164, 400);
+	_createSwitchButton(fLfoWaveSaw[1], kL2Saw, fImgBtnSaw_1, fImgBtnSaw_0, 204, 400);
+	_createSwitchButton(fLfoWavePulse[1], kL2Pulse, fImgBtnPulse_1, fImgBtnPulse_0, 204, 416);
+	_createSwitchButton(fLfoWaveTri[1], kL2Tri, fImgBtnTri_1, fImgBtnTri_0, 204, 432);
+	_createSwitchButton(fLfoWaveNoise[1], kL2Noise, fImgBtnNoise_1, fImgBtnNoise_0, 204, 448);
 }
 
 void CCetoneUI::parameterChanged(uint32_t index, float value)
 {
 	// Sync knobs' value
 	auto iterCurrentKnob = fKnobMap.find(index);
-	if (iterCurrentKnob != fKnobMap.end())	// Map key exists
+	if (iterCurrentKnob != fKnobMap.end()) {	// Map key exists
 		iterCurrentKnob->second->setValue(value);
+		return;
+	}
+
+	// Sync Osc switch buttons' value
+	switch (index) {
+		case pOWave1:
+			_syncOscWaveSelection(0, (uint32_t)value);
+			break;
+		case pOWave2:
+			_syncOscWaveSelection(1, (uint32_t)value);
+			break;
+		case pOWave3:
+			_syncOscWaveSelection(2, (uint32_t)value);
+			break;
+
+		case pOMode1:
+			_syncOscModeSelection(0, (uint32_t)value);
+			break;
+		case pOMode2:
+			_syncOscModeSelection(1, (uint32_t)value);
+			break;
+		case pOMode3:
+			_syncOscModeSelection(2, (uint32_t)value);
+			break;
+
+		case pL1Wave:
+			_syncLfoWaveSelection(0, (uint32_t)value);
+			break;
+		case pL2Wave:
+			_syncLfoWaveSelection(1, (uint32_t)value);
+			break;
+	}
 
 	// Explicitly ask DPF to redraw UI (for updating labels)
 	repaint();
@@ -142,7 +238,9 @@ void CCetoneUI::imageButtonClicked(ImageButton* button, int)
 
 void CCetoneUI::imageSwitchClicked(ImageSwitch* button, bool down)
 {
-	setParameterValue(button->getId(), down);
+	_checkOscWaveSelection(button->getId());
+	_checkOscModeSelection(button->getId());
+	_checkLfoWaveSelection(button->getId());
 }
 
 void CCetoneUI::imageKnobDragStarted(ImageKnob* knob)

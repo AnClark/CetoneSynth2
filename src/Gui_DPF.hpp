@@ -51,6 +51,12 @@ protected:
 
 private:
 	// -------------------------------------------------------------------
+	// Parameter storage
+
+	uint32_t fOscWave[3], fOscMode[3];
+	uint32_t fLfoWave[2];
+
+	// -------------------------------------------------------------------
 	// Label renderer
 
 	NanoVG fNanoText;
@@ -61,6 +67,10 @@ private:
 
 	Image fImgBackground, fImgKnobScale;
 	Image fImgKnob, fImgKnobRed;
+
+	Image fImgBtnOff_0, fImgBtnOff_1, fImgBtnSaw_0, fImgBtnSaw_1, fImgBtnPulse_0, fImgBtnPulse_1, fImgBtnTri_0, fImgBtnTri_1, fImgBtnNoise_0, fImgBtnNoise_1;
+	Image fImgNorm_0, fImgNorm_1, fImgAdd_0, fImgAdd_1, fImgMul_0, fImgMul_1, fImgSuper_0, fImgSuper_1;
+
     std::vector<Point<int>> fKnobScaleDrawPoints;
 
 	// -------------------------------------------------------------------
@@ -95,6 +105,11 @@ private:
 
 	ScopedPointer<ImageKnob> fAudioVol, fAudioPan;
 
+	ScopedPointer<ImageSwitch> fOscWaveOff[3], fOscWaveSaw[3], fOscWavePulse[3], fOscWaveTri[3], fOscWaveNoise[3];
+	ScopedPointer<ImageSwitch> fOscModeNorm[3], fOscModeAdd[3], fOscModeMul[3], fOscModeSuper[3];
+
+	ScopedPointer<ImageSwitch> fLfoWaveOff[2], fLfoWaveSaw[2], fLfoWavePulse[2], fLfoWaveTri[2], fLfoWaveNoise[2];
+
 	// -------------------------------------------------------------------
 	// Parameter maps
 
@@ -105,8 +120,15 @@ private:
 
 	void _createKnob(ScopedPointer<ImageKnob>& knob, uint32_t paramId, uint absolutePosX, uint absolutePosY, uint rotationAngle = 275);
 	void _createSlider(ScopedPointer<ImageSlider>& slider, uint32_t paramId, uint startPosX, uint startPosY, uint endPosX, uint endPosY, float step, bool inverted = false);
-	void _createSwitchButton(ScopedPointer<ImageSwitch>& switchButton, uint32_t paramId, uint absolutePosX, uint absolutePosY);
+	void _createSwitchButton(ScopedPointer<ImageSwitch>& switchButton, uint32_t controllerId, Image& imageOn, Image& imageOff, uint absolutePosX, uint absolutePosY);
 	void _createButton(ScopedPointer<ImageButton>& button, uint id, Image& imageNormal, Image& imagePressed, uint absolutePosX, uint absolutePosY);
+
+	void _syncOscWaveSelection(uint8_t oscId, uint32_t oscWave);
+	void _checkOscWaveSelection(uint32_t controllerId);
+	void _syncOscModeSelection(uint8_t oscId, uint32_t oscMode);
+	void _checkOscModeSelection(uint32_t controllerId);
+	void _syncLfoWaveSelection(uint8_t lfoId, uint32_t lfoWave);
+	void _checkLfoWaveSelection(uint32_t controllerId);
 
 	DISTRHO_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CCetoneUI)
 };
